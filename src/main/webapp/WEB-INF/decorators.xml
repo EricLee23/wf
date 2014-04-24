@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<decorators defaultdir="/WEB-INF/decorators">
+
+	<!-- Excludes will never be decorated by Sitemesh. -->
+	<excludes>
+		<pattern>*/exclude/*</pattern>
+	</excludes>
+
+	<decorator name="demoFtl" page="demo.ftl">
+		<pattern>/demo/hello</pattern>
+	</decorator>
+	
+	<decorator name="demoJsp" page="demo.jsp">
+		<pattern>/demo/world</pattern>
+	</decorator>
+	
+</decorators>

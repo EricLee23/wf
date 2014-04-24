@@ -18,6 +18,11 @@
 	<!-- 默认的注解映射的支持 -->
 	<mvc:annotation-driven />
 	
+	<!-- 国际化支持 -->
+    <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+        <property name="basename" value="message"/>
+    </bean>
+	
 	<!-- 启动JSON格式的配置 -->
 	<bean id="jacksonMessageConverter" class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">
 		<!-- 解决 HttpMediaTypeNotAcceptableException: Could not find acceptable representation -->
@@ -28,15 +33,27 @@
 		</property>
 	</bean>
 	
-	<!-- 视图解释类 -->
+	<!-- 视图解释类FreeMarker-->
+    <bean id="viewResolver"
+        class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+        <property name="cache" value="true" />
+        <property name="prefix" value="/" />
+        <property name="suffix" value=".html" />
+        <property name="contentType" value="text/html;charset=UTF-8"></property>
+        <property name="requestContextAttribute" value="request" />
+        <property name="exposeSpringMacroHelpers" value="true" />
+        <property name="exposeRequestAttributes" value="true" />
+        <property name="exposeSessionAttributes" value="true" />
+    </bean>
+	
+	<!-- 视图解释类JSP -->
 	<bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/WEB-INF/jsp/" />
-		<!--可为空,方便实现自已的依据扩展名来选择视图解释类的逻辑 -->
 		<property name="suffix" value=".jsp" />
-		<property name="viewClass"
-			value="org.springframework.web.servlet.view.JstlView" />
-	</bean>
+		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
+		<property name="contentType" value="text/html; charset=UTF-8" />
+	</bean> 
 
 	<!-- 对静态资源文件的访问  -->
 	<mvc:resources mapping="/images/**" location="/images/"
